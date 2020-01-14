@@ -2,23 +2,22 @@ import {Pipe, PipeTransform} from '@angular/core';
 
 @Pipe({name: 'datediff'})
 export class DateDiffPipe implements PipeTransform {
-  transform(value: number, args: any[]): string {
+  transform(value: number, secondDate: number, post?: string): string {
     if (value) {
 
-        args = [].concat(args);
 
-        let date2: number = Number(args[0]) || new Date().getTime();
+        let date2: number = Number(secondDate) || new Date().getTime();
         if ( date2 == 0 ) {
             date2 = new Date().getTime();
         }
-        let postfix: string = args[1] || '';
+        let postfix: string = post || '';
         let res: number = Math.abs(date2 - value);
         if ( res > 0 ) {
             let secs:number = res / 1000;
             let minutes:number = secs / 60;
             let hours:number = minutes / 60;
             let days:number = hours / 24;
-            
+
             let result: string = "";
             if ( days >= 1 ) {
                 result = Math.round(days) + (Math.round(days) == 1 ? " day" : " days");
