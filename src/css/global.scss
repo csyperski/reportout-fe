@@ -1,0 +1,57 @@
+@import '_include';
+
+html, body {
+  background-color: #63a1b5 !important;
+  height: 100%;
+}
+
+a {
+  cursor:pointer;
+}
+
+.block {
+  display: block;
+}
+
+footer {
+  padding: 0px 0;
+  text-align: center;
+}
+.toolbar-spacer {
+  flex: 1;
+}
+
+
+mat-form-field.full {
+  width: 100%;
+}
+
+.wait {
+  padding-top: 50px;
+  text-align: center;
+}
+
+.wait .wait-title .wait-title-text {
+  font-weight: bold;
+  font-size: 1.6em;
+  color: #fff;
+  text-shadow: 1px 1px 0px #34545e, 1px 1px 10px #000;
+}
+
+.wait .wait-desc {
+  margin-top: 45px;
+  padding: 25px;
+  background: rgba( 255, 255, 255, 0.7);
+  border-top: #777777 1px solid;
+  border-bottom: #777777 1px solid;
+  box-shadow: 0px 0px 45px 5px #000;
+}
+
+.wait .wait-desc i {
+  color: #535353;
+  text-shadow: 0px 0px 10px #fff;
+}
+
+.list-title {
+  font-weight: bold;
+}

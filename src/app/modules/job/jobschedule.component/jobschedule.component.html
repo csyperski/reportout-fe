@@ -1,0 +1,30 @@
+<div class="content-wrapper p-4 container">
+  <div class="row">
+    <mat-toolbar class="transparent col">
+      <mat-icon>calendar_today</mat-icon>
+      <span>Job Schedule</span>
+    </mat-toolbar>
+  </div>
+
+  <ro-loading *ngIf="state === ComponentState.Loading"></ro-loading>
+
+  <ro-nada msg="No Scheduled Jobs Found"
+            [display]="state === ComponentState.Ready && daySchedules.length == 0"></ro-nada>
+
+  <div [hidden]="state !== ComponentState.Ready" class="mt-4 mat-elevation-z5">
+    <table  class="table table-condensed table-striped">
+      <tbody>
+      <tr *ngFor="let ds of daySchedules" >
+        <td>
+          <div><strong>{{ds.date | date:'fullDate' }} {{ds.date | date:'shortTime' }}</strong> - <span class="text-muted">{{ds.date.getTime() | datediff:0:'from now'}}</span></div>
+          <ul class="mt-4">
+            <li *ngFor="let job of ds.jobs">
+              <a [routerLink]="['/jobs/update/', job.id]">{{job.name}}</a> - {{job.getJobActionString()}}
+            </li>
+          </ul>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,93 @@
+<div class="content-wrapper p-4 container">
+  <div class="row">
+    <mat-toolbar class="transparent edit-item col">
+      <mat-icon>perm_identity</mat-icon>
+      <span *ngIf="isAddOperation"> Add New User</span>
+      <span *ngIf="!isAddOperation"> Modify User</span>
+    </mat-toolbar>
+  </div>
+
+  <form *ngIf="state === ComponentState.Ready" [formGroup]="formModel" (ngSubmit)="onSubmit()" novalidate>
+    <div class="m-3" *ngIf="formModel">
+      <div class="mat-elevation-z5 white-bg pt-3 pb-3">
+        <div class="container-fluid">
+          <div class="form-group row">
+            <div class="col-sm-12 col-md-6">
+              <mat-form-field class="full">
+                <input matInput formControlName="email" maxlength="100" type="text" id="email"
+                       placeholder="Email Address" required/>
+              </mat-form-field>
+              <ro-error-message [formGroup]="formModel" controlName="email"></ro-error-message>
+            </div>
+
+            <div class="col-sm-12 col-md-6">
+              <mat-form-field class="full">
+                <input *ngIf="isAddOperation" matInput formControlName="password" maxlength="100" type="password" id="password"
+                       placeholder="Password" required/>
+                <input *ngIf="!isAddOperation" matInput formControlName="password" maxlength="100" type="password" id="passwordup"
+                       placeholder="Password"/>
+              </mat-form-field>
+              <ro-error-message [formGroup]="formModel" controlName="email"></ro-error-message>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-12 col-md-6">
+              <mat-form-field class="full">
+                <input matInput formControlName="firstName" maxlength="100" type="text" id="firstName"
+                       placeholder="First Name" required/>
+              </mat-form-field>
+              <ro-error-message [formGroup]="formModel" controlName="firstName"></ro-error-message>
+            </div>
+
+            <div class="col-sm-12 col-md-6">
+              <mat-form-field class="full">
+                <input matInput formControlName="lastName" maxlength="100" type="text" id="lastName"
+                       placeholder="Last Name" required/>
+              </mat-form-field>
+              <ro-error-message [formGroup]="formModel" controlName="lastName"></ro-error-message>
+            </div>
+          </div>
+
+          <div class="form-group row">
+
+            <div class="col-sm-6 col-md-3">
+                <mat-checkbox formControlName="enabled" id="enabled">Enabled</mat-checkbox>
+            </div>
+
+            <div class="col-sm-6 col-md-3">
+              <mat-checkbox formControlName="administrator" id="administrator">Administrator</mat-checkbox>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group button-container mt-3">
+        <button (click)="onCancel()" mat-raised-button="" [disabled]="state === ComponentState.NotLoaded || state === ComponentState.Loading"
+                type="button">Cancel
+        </button>
+
+
+        <button mat-raised-button="" class="float-right" color="accent" [disabled]="!formModel.valid || state !== ComponentState.Ready"
+                *ngIf="isAddOperation"
+                type="submit">Add
+        </button>
+
+        <button mat-raised-button="" class="float-right" color="accent" [disabled]="!formModel.valid || state !== ComponentState.Ready"
+                *ngIf="!isAddOperation"
+                type="submit">Update
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+
+
+
+
+
+
+
+
+
+

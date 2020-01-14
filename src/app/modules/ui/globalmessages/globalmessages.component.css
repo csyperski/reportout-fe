@@ -1,0 +1,4 @@
+.global-success-msg, .global-error-msg {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}

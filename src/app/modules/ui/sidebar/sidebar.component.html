@@ -1,0 +1,7 @@
+  <ul class="mt-2 nav nav-pills nav-stacked">
+    <li *ngFor="let item of menuItems">
+      <a class="pl-3 pt-2 pb-2" (click)="navigate(item)">
+        <mat-icon>{{item.icon}}</mat-icon>
+        {{item.title}}</a>
+    </li>
+  </ul>

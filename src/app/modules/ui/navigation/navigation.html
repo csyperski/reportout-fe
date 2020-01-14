@@ -1,0 +1,28 @@
+<nav class="top-nav-bar navbar-expand-lg navbar navbar-fixed-top navbar-inverse navbar-dark bg-dark">
+  <div class="container">
+
+    <a class="navbar-brand" href="#">
+      <span class="navbar-brand"><i class="fa fa-paper-plane"></i> &nbsp;&nbsp;Report Out</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon">
+    </span>
+    </button>
+    <div class="collapse navbar-collapse bg-dark" id="navbarNav">
+      <ul class="navbar-nav nav">
+        <li [class.active]="isSelected(item)" *ngFor="let item of activeMenuItems">
+          <a [title]="item.title" data-toggle="collapse" data-target=".navbar-collapse" (click)="navigate(item)"><i
+            class="fa {{item.icon}}"></i> &nbsp; <span class="d-md-none d-lg-inline">{{ item.title }}</span></a>
+        </li>
+      </ul>
+      <ul *ngIf="logOffItem.shouldRender(getUserLocal())" class="nav navbar-nav">
+        <li>
+          <a [title]="logOffItem.title" data-toggle="collapse" data-target=".navbar-collapse"
+             (click)="navigate(logOffItem)"><i class="text-danger fa {{logOffItem.icon}}"></i> &nbsp; </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+

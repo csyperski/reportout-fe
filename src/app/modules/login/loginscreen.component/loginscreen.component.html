@@ -1,0 +1,59 @@
+<div class="container h-100">
+  <div class="row h-100 justify-content-center align-items-center">
+    <div class="col-md-8 col-sm-12 mt-5 mb-5">
+
+      <form [formGroup]="formGroup" (ngSubmit)="onSubmit()" class="form-signin" novalidate>
+        <mat-card>
+          <mat-card-content>
+            <div class="pb-4">
+
+              <mat-card-title class="text-center">Please Login</mat-card-title>
+              <mat-divider></mat-divider>
+
+              <div class="form-group mt-4">
+                <mat-form-field class="full">
+                  <span matPrefix><mat-icon>person</mat-icon> &nbsp;</span>
+                  <input matInput formControlName="username"
+                         placeholder="Username"
+                         type="text"
+                         id="username"/>
+                </mat-form-field>
+                <ro-error-message [formGroup]="formGroup"
+                                   controlName="username"></ro-error-message>
+
+              </div>
+
+              <div class="form-group">
+                <mat-form-field class="full">
+                  <span matPrefix><mat-icon>lock</mat-icon> &nbsp;</span>
+                  <input matInput formControlName="password"
+                         placeholder="Password"
+                         type="password"
+                         id="password"/>
+                </mat-form-field>
+                <ro-error-message [formGroup]="formGroup"
+                                   controlName="password"></ro-error-message>
+              </div>
+
+              <div class="float-left">
+                <ro-globalmessages></ro-globalmessages>
+              </div>
+            </div>
+          </mat-card-content>
+          <mat-card-actions>
+            <div class="container p-4">
+              <div class="row">
+                <div class="offset-6 col-6 text-right">
+                  <button mat-raised-button="" color="accent" [disabled]="!formGroup.valid"
+                          type="submit">
+                    Login
+                  </button>
+                </div>
+              </div>
+            </div>
+          </mat-card-actions>
+        </mat-card>
+      </form>
+    </div>
+  </div>
+</div>

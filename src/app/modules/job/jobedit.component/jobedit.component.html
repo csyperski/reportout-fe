@@ -1,0 +1,308 @@
+<div class="content-wrapper p-4 container">
+  <div class="row">
+    <mat-toolbar class="transparent edit-item col">
+      <mat-icon>star</mat-icon>
+      <span *ngIf="isAddOperation"> Add New Job</span>
+      <span *ngIf="!isAddOperation"> Modify Job</span>
+    </mat-toolbar>
+  </div>
+
+  <ro-loading *ngIf="state === ComponentState.Loading" [description]="loadingMessage"></ro-loading>
+
+  <div class="col-12">
+
+    <form *ngIf="state === ComponentState.Ready" [formGroup]="formModel" (ngSubmit)="onSubmit()" novalidate>
+
+      <div class="mat-elevation-z5 white-bg mt-3 pb-3">
+
+        <mat-tab-group animationDuration="300ms" mat-align-tabs="center" [selectedIndex]="selectedTabIndex"
+                       (selectedIndexChange)="selectedTabIndex = $event" *ngIf="formModel">
+          <mat-tab label="General">
+            <div class="container-fluid pt-2">
+              <div class="form-group row">
+                <div class="col-md-12 col-lg-6">
+                  <mat-form-field class="full">
+                    <input matInput formControlName="name" type="text" id="name"
+                           placeholder="Job Name" required/>
+                  </mat-form-field>
+                  <ro-error-message [formGroup]="formModel" controlName="name"></ro-error-message>
+                </div>
+                <div class="col-md-12 col-lg-6">
+                  <mat-form-field class="full">
+                    <mat-label>Data Source</mat-label>
+                    <mat-select formControlName="dataSource">
+                      <mat-option value="">Select One</mat-option>
+                      <mat-option *ngFor="let d of dataSources" [value]="d.id">
+                        {{d.name}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <ro-error-message [formGroup]="formModel" controlName="dataSource"></ro-error-message>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <div class="col-12">
+                  <mat-form-field class="full">
+                <textarea matInput class="sql-editor" formControlName="query" type="text" id="query"
+                          placeholder="SQL Query">
+                </textarea>
+                  </mat-form-field>
+                  <ro-error-message [formGroup]="formModel" controlName="query"></ro-error-message>
+                  <div class="text-muted" *ngIf="previewRunning">(preview running)</div>
+                </div>
+              </div>
+
+              <div class="row" *ngIf="previewResult">
+                <div class="col-12">
+                  <div *ngIf="!previewResult.successful"
+                       class="bs-callout bs-callout-danger component-error bg-warning">
+                    {{previewResult.message}}
+                  </div>
+                  <div *ngIf="previewResult.successful" class="table-responsive">
+                    <table *ngIf="previewResult.data" class="table table-condensed table-striped">
+                      <thead>
+                      <tr>
+                        <th *ngFor="let h of previewResult.headerTitles">
+                          {{h | truncate:15}}
+                        </th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr *ngFor="let r of previewResult.data">
+                        <td *ngFor="let c of r">
+                          <span title="{{c}}">{{c | truncate:20}}</span>
+                        </td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Details">
+
+            <div class="container-fluid pt-2">
+              <div class="form-group row">
+                <div class="col-12">
+                  <mat-form-field class="full">
+                <textarea matInput formControlName="description" type="text" id="description"
+                          placeholder="Job Description">
+                </textarea>
+                  </mat-form-field>
+                  <ro-error-message [formGroup]="formModel" controlName="description"></ro-error-message>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <div class="col-sm-6 col-md-3">
+                  <mat-checkbox formControlName="publicJob" id="publicJob">Public Job</mat-checkbox>
+                </div>
+                <div class="col-sm-6 col-md-3">
+                  <mat-checkbox formControlName="includeHeaders" id="includeHeaders">Column Header</mat-checkbox>
+                </div>
+              </div>
+            </div>
+          </mat-tab>
+          <mat-tab label="Transfer">
+            <div class="container-fluid pt-2">
+              <div class="form-group row">
+                <div class="col-12">
+                  <mat-form-field class="full">
+                    <mat-label>Job Action</mat-label>
+                    <mat-select formControlName="jobAction" (selectionChange)="onActionChange($event)" id="jobAction">
+                      <mat-option value="0">Manual Execution</mat-option>
+                      <mat-option value="1">Email</mat-option>
+                      <mat-option value="2">FTP</mat-option>
+                      <mat-option value="3">SFTP</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <div class="col-md-12">
+                  <mat-form-field class="full">
+                    <input matInput formControlName="confirmationEmail" type="text" id="confirmationEmail"
+                           placeholder="Confirmation Email"/>
+                  </mat-form-field>
+                  <ro-error-message [formGroup]="formModel" controlName="confirmationEmail"></ro-error-message>
+                </div>
+              </div>
+
+              <div class="form-group row" *ngIf="isEmail()">
+                <div class="col-12">
+                  <mat-form-field class="full">
+                    <input matInput formControlName="username" type="text" id="email"
+                           placeholder="Recipient Email Address"/>
+                  </mat-form-field>
+                  <ro-error-message [formGroup]="formModel" controlName="username"></ro-error-message>
+                </div>
+              </div>
+
+              <div class="form-group row" *ngIf="isFtp()">
+                <div class="col-md-12 col-lg-6">
+                  <mat-form-field class="full">
+                    <input matInput formControlName="username" type="text" id="usernameftp"
+                           placeholder="Username"/>
+                  </mat-form-field>
+                  <ro-error-message [formGroup]="formModel" controlName="username"></ro-error-message>
+                </div>
+
+                <div class="col-md-12 col-lg-6">
+                  <mat-form-field class="full">
+                    <input matInput formControlName="password" type="password" id="password"
+                           placeholder="Password"/>
+                  </mat-form-field>
+                  <ro-error-message [formGroup]="formModel" controlName="password"></ro-error-message>
+                </div>
+              </div>
+
+              <div *ngIf="isFtp()" class="form-group row">
+                <div class="col-md-12 col-lg-9">
+                  <mat-form-field class="full">
+                    <input matInput formControlName="jobHost" type="text" id="jobHost"
+                           placeholder="Hostname or IP address"/>
+                  </mat-form-field>
+                  <ro-error-message [formGroup]="formModel" controlName="jobHost"></ro-error-message>
+                </div>
+
+                <div class="col-md-12 col-lg-3">
+                  <mat-form-field class="full">
+                    <input matInput formControlName="port" type="number" id="port"
+                           placeholder="Port"/>
+                  </mat-form-field>
+                  <ro-error-message [formGroup]="formModel" controlName="port"></ro-error-message>
+                </div>
+              </div>
+
+              <div *ngIf="isFtp()" class="form-group row">
+                <div class="col-12">
+                  <mat-form-field class="full">
+                    <input matInput formControlName="jobPath" type="text" id="jobPath"
+                           placeholder="Path"/>
+                  </mat-form-field>
+                  <ro-error-message [formGroup]="formModel" controlName="jobPath"></ro-error-message>
+                </div>
+              </div>
+
+            </div>
+          </mat-tab>
+          <mat-tab label="Schedule" *ngIf="! isAddOperation && ! isNoOp()">
+            <div class="container-fluid pt-2">
+
+              <div class="row">
+                <div *ngFor="let col of schedule; let i = index" class="col-xs-12 col-sm-6 col-md-3">
+                  <table class="table table-condensed table-striped table-times">
+                    <thead>
+                    <tr>
+                      <th>
+                        {{getDayByNumber(i + 1)}}
+                      </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let row of col">
+                      <td>
+                        <button type="button" (click)="row.selected = false" *ngIf="row.selected" mat-raised-button
+                                color="primary" [id]="row.getUniqueString()">
+                          <mat-icon>check_circle</mat-icon>
+                          {{row.getTimeString()}} </button>
+                        <button type="button" (click)="row.selected = true" *ngIf="!row.selected" mat-raised-button
+                                [id]="row.getUniqueString()">
+                          <mat-icon>radio_button_unchecked</mat-icon>
+                          {{row.getTimeString()}} </button>
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </mat-tab>
+          <mat-tab label="Actions" *ngIf="! isAddOperation">
+            <div class="container-fluid mt-2">
+
+              <div class="row">
+                <div class="col-12 p-4">
+                  <mat-card>
+                    <div class="container">
+                      <div class="row">
+                        If you'd like to execute this Job now, use the button below.  This will take the action specified on the Transfer tab.
+                      </div>
+                      <div class="row pt-3">
+                        <div class="col-3 offset-9 text-right">
+                          <button
+                            [disabled]="! formModel.valid || formModel.dirty || state !== ComponentState.Ready || isAddOperation"
+                            mat-raised-button color="primary" type="button" (click)="executeTask()">Execute Job
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </mat-card>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-12 p-4">
+                  <mat-card>
+                    <div class="container">
+                      <div class="row">
+                        If you'd like to download a CSV file of data produced by this job, click on the button below.  This
+                        will output the data to a CSV regardless of the Job Action specified in the Transfer tab.
+                      </div>
+                      <div class="row pt-3">
+                        <div class="col-3 offset-9 text-right">
+                          <button class="float-right"
+                                  [disabled]="! formModel.valid || formModel.dirty || state !== ComponentState.Ready || isAddOperation"
+                                  mat-raised-button color="primary" type="button" (click)="downloadTask()">Execute Job as Download
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </mat-card>
+                </div>
+              </div>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+
+      </div>
+
+      <div class="form-group button-container mt-3">
+        <button (click)="onCancel()" mat-raised-button=""
+                [disabled]="state === ComponentState.NotLoaded || state === ComponentState.Loading"
+                type="button">Cancel
+        </button>
+
+
+        <button mat-raised-button="" class="float-right" color="accent"
+                [disabled]="!formModel.valid || state !== ComponentState.Ready"
+                *ngIf="isAddOperation"
+                type="submit">Add
+        </button>
+
+        <button mat-raised-button="" class="float-right" color="accent"
+                [disabled]="!formModel.valid || state !== ComponentState.Ready"
+                *ngIf="!isAddOperation"
+                type="submit">Update
+        </button>
+      </div>
+    </form>
+
+  </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+

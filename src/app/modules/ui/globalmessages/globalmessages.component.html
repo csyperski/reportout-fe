@@ -1,0 +1,7 @@
+<div
+  class="text-muted"
+  *ngIf="hasMessage()">
+  <div *ngIf="message.title">
+    <strong>{{message.title}}</strong>
+  </div>{{message.desc}}
+</div>

@@ -1,0 +1,84 @@
+<div class="content-wrapper p-4 container">
+  <div class="row">
+    <mat-toolbar class="transparent col">
+      <mat-icon>home</mat-icon>
+      <span>Report Out</span>
+    </mat-toolbar>
+  </div>
+
+  <div class="mt-4 mat-elevation-z5">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 col-xs-12 p-4">
+          <ro-recent-graph></ro-recent-graph>
+        </div>
+        <div class="col-md-6 col-xs-12 p-4">
+          <ro-month-graph></ro-month-graph>
+        </div>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <div class="row">
+        <div class="col-12 p-4">
+
+          <ro-historyline-graph></ro-historyline-graph>
+
+        </div>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <div class="row">
+        <div class="col-12 p-4">
+          <ro-loading *ngIf="state === ComponentState.Loading"></ro-loading>
+          <table *ngIf="isLoggedIn() && state === ComponentState.Ready" class="table table-condensed table-hover">
+            <thead>
+            <tr>
+              <th>
+                Status
+              </th>
+              <th>
+                Job
+              </th>
+              <th>
+                Started
+              </th>
+              <th>
+                Message
+              </th>
+              <th>
+                Scheduled
+              </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let r of items">
+              <td>
+                <mat-icon class="icon-suc" *ngIf="r.successful">check_circle</mat-icon>
+                <mat-icon class="icon-fail" *ngIf="!r.successful">report_problem</mat-icon>
+              </td>
+              <td>
+                <a [routerLink]="['/jobs/update/', r.job.id]">{{r.job.name}}</a>
+              </td>
+              <td>
+                <div>{{r.dateStarted | date:'medium'}}</div>
+
+                <span *ngIf="r.successful" class="text-muted">{{r.records}} rows processed in {{r.dateStarted | datediff:r.dateCompleted  | lowercase}}</span>
+              </td>
+              <td>
+                <span title="{{r.message}}">{{r.message | truncate:75}}</span>
+              </td>
+              <td>
+                <mat-icon class="icon-suc" *ngIf="r.executedByScheduler">check_circle</mat-icon>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

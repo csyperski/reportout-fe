@@ -1,0 +1,12 @@
+mat-table {
+  .mat-column-id, .mat-column-actions {
+    max-width: 100px;
+  }
+
+  .mat-column-name a {
+    display: block;
+    width: 100%;
+  }
+}
+
+

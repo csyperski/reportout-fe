@@ -1,0 +1,23 @@
+
+ul {
+
+  padding: 0;
+
+  li {
+    width: 100%;
+  }
+
+  li a {
+    display: block;
+    width: 100%;
+  }
+
+  li:hover a {
+    background-color: #DADADA;
+    border-radius: 0px;
+  }
+
+  mat-icon {
+    vertical-align: middle;
+  }
+}

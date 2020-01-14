@@ -1,0 +1,110 @@
+<div class="content-wrapper p-4 container">
+  <div class="row">
+    <mat-toolbar class="transparent edit-item col">
+      <mat-icon>perm_identity</mat-icon>
+      <span *ngIf="isAddOperation"> Add Data Source</span>
+      <span *ngIf="!isAddOperation"> Modify Data Source</span>
+    </mat-toolbar>
+  </div>
+
+  <form *ngIf="state === ComponentState.Ready" [formGroup]="formModel" (ngSubmit)="onSubmit()" novalidate>
+    <div class="m-3" *ngIf="formModel">
+      <div class="mat-elevation-z5 white-bg pt-3 pb-3">
+        <div class="container-fluid">
+          <div class="form-group row">
+            <div class="col-sm-12 col-md-6">
+              <mat-form-field class="full">
+                <input matInput formControlName="name" type="text" id="name"
+                       placeholder="Data Source Name" required/>
+              </mat-form-field>
+              <ro-error-message [formGroup]="formModel" controlName="name"></ro-error-message>
+            </div>
+
+            <div class="col-sm-12 col-md-6">
+              <mat-form-field class="full">
+                <input matInput formControlName="driverClass" type="text" id="driverClass"
+                       placeholder="Driver" required/>
+              </mat-form-field>
+              <ro-error-message [formGroup]="formModel" controlName="driverClass"></ro-error-message>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-12">
+              <mat-form-field class="full">
+                <input matInput formControlName="connectionString" type="text" id="connectionString"
+                       placeholder="Connection String" required/>
+              </mat-form-field>
+              <ro-error-message [formGroup]="formModel" controlName="connectionString"></ro-error-message>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-12 col-md-6">
+              <mat-form-field class="full">
+                <input matInput formControlName="userName" type="text" id="userName" placeholder="Username"/>
+              </mat-form-field>
+              <ro-error-message [formGroup]="formModel" controlName="userName"></ro-error-message>
+            </div>
+
+            <div class="col-sm-12 col-md-6">
+              <mat-form-field class="full">
+                <input matInput formControlName="password" type="password" id="password"
+                       placeholder="Password"/>
+              </mat-form-field>
+              <ro-error-message [formGroup]="formModel" controlName="password"></ro-error-message>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-6 col-md-3">
+              <mat-checkbox formControlName="limitToAdmin" id="enabled">Admin Only</mat-checkbox>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group button-container mt-3">
+        <div>
+          <button (click)="onCancel()" mat-raised-button=""
+                  [disabled]="state === ComponentState.NotLoaded || state === ComponentState.Loading"
+                  type="button">Cancel
+          </button>
+        </div>
+
+        <div>
+          <button mat-raised-button
+                  [disabled]="!formModel.valid || formModel.dirty || state !== ComponentState.Ready"
+                  (click)="executeTest();" class="btn btn-default pull-right" *ngIf="!isAddOperation" value="Test Now"
+                  type="button">
+            Test Data Source
+          </button>
+        </div>
+
+        <div>
+          <button mat-raised-button="" class="float-right" color="accent"
+                  [disabled]="!formModel.valid || state !== ComponentState.Ready"
+                  *ngIf="isAddOperation"
+                  type="submit">Add
+          </button>
+
+          <button mat-raised-button="" color="accent"
+                  [disabled]="!formModel.valid || state !== ComponentState.Ready"
+                  *ngIf="!isAddOperation"
+                  type="submit">Update
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+
+
+
+
+
+
+
+
+

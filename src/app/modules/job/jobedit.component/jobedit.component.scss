@@ -1,0 +1,23 @@
+.sql-editor {
+  height: 200px;
+}
+
+::ng-deep.mat-tab-label, ::ng-deep.mat-tab-label-active{
+  min-width: 120px!important;
+}
+
+.table-times {
+  width: 130px;
+  th {
+    text-align: center;
+  }
+  td {
+    text-align: center;
+    button {
+      width: 110px;
+      mat-icon {
+        margin-right: 7px;
+      }
+    }
+  }
+}

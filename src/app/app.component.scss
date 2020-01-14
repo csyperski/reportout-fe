@@ -1,0 +1,31 @@
+.root {
+  background-color: #fff;
+  box-shadow: 0px 0px 32px rgba(0, 0, 0, 0.7);
+  padding-top: 0px;
+}
+
+@media only screen and (min-width: 769px) {
+  .root {
+    height: calc(100% - 60px);
+  }
+
+  .main-content-area {
+    max-height: 100%;
+    overflow: scroll;
+    overflow-x: auto;
+    overflow-y: auto;
+  }
+
+  .main-wrapper {
+    height: 100%;
+    max-height: 100%;
+
+  }
+}
+
+.sidebar {
+  padding: 20px 0 20px 0 !important;
+  background-color: #f5f5f5;
+  border-right: 1px solid #eee;
+  height: 100%;
+}

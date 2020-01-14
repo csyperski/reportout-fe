@@ -1,0 +1,132 @@
+html, body {
+    background-color: #63a1b5 !important;
+    height: 100%;
+}
+
+body {
+    padding-top: 50px;
+}
+
+a {
+    cursor:pointer;
+}
+
+.block {
+    display: block;
+}
+
+footer {
+    padding: 0px 0;
+    text-align: center;
+}
+
+.big-top-margin {
+    margin-top: 40px;
+}
+
+input.filter, input.filter:focus {
+    border-width: 0px 0px 1px 0px;
+    width: 50%;
+    min-width: 200px;
+    outline: none;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 5px;
+}
+
+form:not(.form-signin) input[type=text],
+form:not(.form-signin) input[type=password],
+form:not(.form-signin) input[type=email],
+form:not(.form-signin) select,
+form:not(.form-signin) textarea {
+    
+    border-left-width: 5px;
+    
+}
+.bs-callout {
+    padding: 10px;
+    border: 1px solid #eee;
+    border-left-width: 5px;
+    border-radius: 3px;
+}
+.bs-callout h4 {
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+.bs-callout p:last-child {
+    margin-bottom: 0;
+}
+.bs-callout code {
+    border-radius: 3px;
+}
+.bs-callout+.bs-callout {
+    margin-top: -5px;
+}
+.bs-callout-default {
+    border-left-color: #777;
+}
+.bs-callout-default h4 {
+    color: #777;
+}
+.bs-callout-primary {
+    border-left-color: #428bca;
+}
+.bs-callout-primary h4 {
+    color: #428bca;
+}
+.bs-callout-success {
+    border-left-color: #5cb85c ;
+}
+.bs-callout-success h4 {
+    color: #5cb85c;
+}
+form:not(.form-signin) .ng-invalid.ng-touched,.bs-callout-danger {
+    border-left-color: #d9534f;
+}
+.bs-callout-danger h4 {
+    color: #d9534f;
+}
+.bs-callout-warning {
+    border-left-color: #f0ad4e;
+}
+.bs-callout-warning h4 {
+    color: #f0ad4e;
+}
+.bs-callout-info {
+    border-left-color: #5bc0de;
+}
+.bs-callout-info h4 {
+    color: #5bc0de;
+}
+
+.panel {
+    border-radius: 0px;
+}
+
+h1, h2, h3, h4, h5, h6, h7 {
+  border-width: 0px 0px 1px 0px;
+  border-color: #428bca;
+  border-style: solid;
+  padding-left: 10px;
+}
+
+.wait {
+    text-align: center;
+}
+
+.wait .wait-title .wait-title-text {
+    font-weight: bold;
+    font-size: 1.6em;
+    color: #fff;
+    text-shadow: 1px 1px 0px #34545e, 1px 1px 10px #000;
+}
+
+.wait .wait-desc {
+    margin-top: 45px;
+
+}
+
+.wait .wait-desc i {
+    color: #535353;
+    text-shadow: 0px 0px 10px #fff;
+}

@@ -1,0 +1,157 @@
+<div class="content-wrapper p-4 container">
+  <div class="row">
+    <mat-toolbar class="transparent col">
+      <mat-icon>perm_identity</mat-icon>
+      <span>User Accounts</span>
+
+      <span class="toolbar-spacer"></span>
+
+      <button class="pull-right" mat-button="" color="accent" [routerLink]="['../add']" type="button">
+        <mat-icon>control_point</mat-icon>
+      </button>
+    </mat-toolbar>
+  </div>
+
+  <div *ngIf="state === ComponentState.Ready" class="row justify-content-md-center filter-container form-group pt-2">
+
+    <mat-form-field class="width-auto">
+      <input matInput #filter placeholder="Filter Users"
+             type="text"
+             (keyup)="applyFilter($event.target.value)"/>
+    </mat-form-field>
+  </div>
+
+  <ro-loading *ngIf="state === ComponentState.Loading"></ro-loading>
+
+  <ro-nada msg="No Users Found" [display]="state === ComponentState.Ready && dataSource.data.length == 0"></ro-nada>
+
+  <div [hidden]="state !== ComponentState.Ready || dataSource.data.length === 0" class="mat-elevation-z5">
+    <mat-table #table [dataSource]="dataSource" matSort>
+
+
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> #</mat-header-cell>
+        <mat-cell *matCellDef="let item"><a [routerLink]="['../update/', item.id]">{{item.id}}</a></mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="email">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Email</mat-header-cell>
+        <mat-cell *matCellDef="let item"><a class="list-title" [routerLink]="['../update/', item.id]">{{item.email}}</a></mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Name</mat-header-cell>
+        <mat-cell *matCellDef="let item">{{item.firstName}} {{item.lastName}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="enabled">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Active</mat-header-cell>
+        <mat-cell *matCellDef="let item">
+          <mat-icon *ngIf="item.enabled" class="text-success">
+            check_circle
+          </mat-icon>
+          <mat-icon *ngIf="!item.enabled" class="text-danger">
+            do_not_disturb
+          </mat-icon>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="administrator">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Admin</mat-header-cell>
+        <mat-cell *matCellDef="let item">
+          <mat-icon *ngIf="item.administrator" class="text-success">
+            check_circle
+          </mat-icon>
+          <mat-icon *ngIf="!item.administrator" class="text-danger">
+            do_not_disturb
+          </mat-icon>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
+        <mat-cell *matCellDef="let item">
+          <button color="warn" mat-mini-fab *ngIf="item.id == itemToDelete" type="button" (click)="deleteItem()">
+            <mat-icon>delete</mat-icon>
+          </button>
+          <button color="accent" mat-icon-button *ngIf="item.id != itemToDelete" type="button"
+                  (click)="applyItemToDelete(item.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
+      <mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></mat-row>
+
+    </mat-table>
+    <mat-paginator #paginator
+                   [pageSize]="10"
+                   [pageSizeOptions]="[5, 10, 20]"
+                   [showFirstLastButtons]="true">
+    </mat-paginator>
+  </div>
+
+</div>
+
+
+<!--<div class="row">-->
+<!--    <div class="col-xs-12">-->
+<!--        <div class="text-center big-top-margin" *ngIf="busy">-->
+<!--            <i class="fa fa-cog fa-spin fa-4x fa-fw" aria-hidden="true"></i>-->
+<!--        </div>-->
+<!--        <table class="table table-condensed table-hover">-->
+<!--            <thead>-->
+<!--                <tr>-->
+<!--                    <th>-->
+<!--                        #-->
+<!--                    </th>-->
+<!--                    <th>-->
+<!--                        Email-->
+<!--                    </th>-->
+<!--                    <th>-->
+<!--                        Enabled-->
+<!--                    </th>-->
+<!--                    <th>-->
+<!--                        Administrator-->
+<!--                    </th>-->
+<!--                    <th>-->
+<!--                        -->
+<!--                    </th>-->
+<!--                </tr>-->
+<!--            </thead>-->
+<!--            <tbody>-->
+<!--                -->
+<!--                <tr *ngFor="let u of items">-->
+<!--                    <td>-->
+<!--                        <a [routerLink]="['/UserEdit', {userId: u.id}]">-->
+<!--                            {{u.id}}-->
+<!--                        </a>-->
+<!--                    </td>-->
+<!--                    <td>-->
+<!--                        <div><a [routerLink]="['/UserEdit', {userId: u.id}]">{{u.email}}</a></div>-->
+<!--                        <span class="text-muted">{{u.firstName}} {{u.lastName}}</span>-->
+<!--                    </td>-->
+<!--                    <td>-->
+<!--                        <check-x-icon [value]="u.enabled"></check-x-icon>-->
+<!--                    </td>-->
+<!--                    <td>-->
+<!--                        <check-x-icon [value]="u.administrator"></check-x-icon>-->
+<!--                    </td>-->
+<!--                    <td>-->
+<!--                        <div *ngIf="u.id != 1">-->
+<!--                            <button *ngIf="u.id == itemToDelete" type="button" (click)="deleteItem()" class="btn btn-default btn-danger">-->
+<!--                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>-->
+<!--                                <span class="btn-lbl">Confirm Delete</span>-->
+<!--                            </button>-->
+<!--                            <button *ngIf="u.id != itemToDelete" type="button" (click)="applyItemToDelete(u.id)" class="btn btn-default">-->
+<!--                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>-->
+<!--                                <span class="btn-lbl"></span>-->
+<!--                            </button>-->
+<!--                        </div>-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!--            </tbody>-->
+<!--        </table>-->
+<!--    </div>-->
+<!--</div>-->
