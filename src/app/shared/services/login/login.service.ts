@@ -7,13 +7,14 @@ import { timeout, map } from 'rxjs/operators';
 import {SystemVersion} from "../../models/systemversion/systemversion";
 import {Service} from "../baseservice";
 import {User} from "../../models/user/user";
+import {ConfigService} from "../config";
 
 @Injectable()
 export class LoginService extends Service {
 
   pings$: Observable<boolean>;
 
-  constructor(http: HttpClient) {
+  constructor(http: HttpClient, private _configService: ConfigService) {
     super(http);
     this.pings$ = new Observable<boolean>((observer: Observer<boolean>) => {
       const timer$ = timer( 15000, 15000);
@@ -31,7 +32,11 @@ export class LoginService extends Service {
   }
 
   pingUrl(): string {
-    return AppSettings.authUrl + 'ping';
+    return this._configService.getApiUrl() + '/api/1/auth/ping';
+  }
+
+  getBaseUrl(): string {
+    return this._configService.getApiUrl() + '/api/1/auth';
   }
 
   getToken(): string {
@@ -44,19 +49,19 @@ export class LoginService extends Service {
   }
 
   getBackEndVersion(): Observable<string> {
-    return this._http.get<string>(AppSettings.apiUrl + '/api/1/auth/version', this._options);
+    return this._http.get<string>(this.getBaseUrl() + '/version', this._options);
   }
 
   getLatestVersion(): Observable<SystemVersion> {
-    return this._http.get<SystemVersion>(AppSettings.apiUrl + '/api/1/auth/latest', this._options);
+    return this._http.get<SystemVersion>(this.getBaseUrl() + '/latest', this._options);
   }
 
   attemptLogin(username: string, password: string): Observable<string> {
-    return this._http.post(AppSettings.authUrl, JSON.stringify({"email": username, "password": password}), this._options)
+    return this._http.post(this.getBaseUrl(), JSON.stringify({"email": username, "password": password}), this._options)
       .pipe( map( res => res['token']));
   }
 
   getSelf(): Observable<User> {
-    return this._http.get<User>(AppSettings.apiUrl + '/api/1/user/self', this._options);
+    return this._http.get<User>(this._configService.getApiUrl() + '/api/1/user/self', this._options);
   }
 }

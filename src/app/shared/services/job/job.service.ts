@@ -4,16 +4,17 @@ import {Job, PreviewResult, ProcessResult} from "../../models/job/job";
 import {HttpClient} from "@angular/common/http";
 import {AppSettings} from "../../models/appsettings/appsettings";
 import {Observable} from "rxjs";
+import {ConfigService} from "../config";
 
 @Injectable()
 export class JobService extends BaseService<Job> {
 
-  constructor(http: HttpClient) {
+  constructor(http: HttpClient, private _configService: ConfigService) {
     super(http);
   }
 
   getBaseUrl(): string {
-    return AppSettings.apiUrl + '/api/1/job';
+    return this._configService.getApiUrl() + '/api/1/job';
   }
 
   public updateJobSchedules(item: Job): Observable<boolean> {

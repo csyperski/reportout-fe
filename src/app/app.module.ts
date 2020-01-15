@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,6 +18,7 @@ import {ProcessResultService} from "./shared/services/processresult";
 import {AdminAuthGuard, UserAuthGuard} from "./shared/models/authguard";
 import {DataSourceService} from "./shared/services/datasource";
 import {JobService} from "./shared/services/job";
+import {ConfigService, configurationServiceInitializerFactory} from "./shared/services/config";
 
 @NgModule({
   declarations: [
@@ -43,6 +44,8 @@ import {JobService} from "./shared/services/job";
     ProcessResultService,
     DataSourceService,
     JobService,
+    ConfigService,
+    { provide: APP_INITIALIZER, useFactory: configurationServiceInitializerFactory, deps: [ConfigService], multi: true },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,

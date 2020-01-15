@@ -5,6 +5,7 @@ import {User} from "../../models/user/user";
 import {AppSettings} from "../../models/appsettings/appsettings";
 import {HttpClient} from "@angular/common/http";
 import {AuthHelper} from "../authhelper";
+import {ConfigService} from "../config";
 
 export function isLoggedIn(): boolean {
   try {
@@ -18,7 +19,6 @@ export function isLoggedIn(): boolean {
     }
   } catch (err) {
     console.warn(`Error checking if user is already logged: ${err.message}.`);
-    console.warn(localStorage.getItem(AppSettings.localSettingsTokenId));
   }
   return false;
 }
@@ -36,11 +36,11 @@ export function isAdminUser(): boolean {
 
 @Injectable()
 export class UserService extends BaseService<User> {
-    constructor(http: HttpClient) {
+    constructor(http: HttpClient, private _configService: ConfigService) {
         super(http);
     }
 
     getBaseUrl(): string {
-      return AppSettings.apiUrl + '/api/1/user';
+      return this._configService.getApiUrl() + '/api/1/user';
     }
 }

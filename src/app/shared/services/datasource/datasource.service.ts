@@ -5,17 +5,18 @@ import {AppSettings} from "../../models/appsettings/appsettings";
 import {HttpClient} from "@angular/common/http";
 import {DataSource} from "../../models/datasource/datasource";
 import {Observable} from "rxjs";
+import {ConfigService} from "../config";
 
 
 @Injectable()
 export class DataSourceService extends BaseService<DataSource> {
 
-    constructor(http: HttpClient) {
+    constructor(http: HttpClient, private _configService: ConfigService) {
         super(http);
     }
 
     getBaseUrl(): string {
-      return AppSettings.apiUrl + '/api/1/ds';
+      return this._configService.getApiUrl() + '/api/1/ds';
     }
 
   execute(id: number): Observable<boolean> {

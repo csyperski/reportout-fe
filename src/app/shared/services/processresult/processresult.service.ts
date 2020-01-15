@@ -5,16 +5,18 @@ import {AppSettings} from "../../models/appsettings/appsettings";
 import {HttpClient} from "@angular/common/http";
 import {ProcessResult} from "../../models/job/job";
 import {Observable} from "rxjs";
+import {ConfigService} from "../config";
 
 
 @Injectable()
 export class ProcessResultService extends BaseService<ProcessResult> {
-  constructor(http: HttpClient) {
+
+  constructor(http: HttpClient, private _configService: ConfigService) {
     super(http);
   }
 
   getBaseUrl(): string {
-    return AppSettings.apiUrl + '/api/1/results';
+    return this._configService.getApiUrl() + '/api/1/results';
   }
 
   getRecent(count: number): Observable<ProcessResult[]> {

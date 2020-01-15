@@ -21,13 +21,13 @@ export class AppSettings {
         return true;
     }
 
-    public static get authUrl(): string {
-        return AppSettings.apiUrl + '/api/1/auth/';
-    }
-
-    public static get apiUrl(): string {
-      return 'http://localhost:8081';
-    }
+    // public static get authUrl(): string {
+    //     return AppSettings.apiUrl + '/api/1/auth/';
+    // }
+    //
+    // public static get apiUrl(): string {
+    //   return 'http://localhost:8081';
+    // }
 
     public static get localSettingsTokenId(): string {
         return 'id_token';
