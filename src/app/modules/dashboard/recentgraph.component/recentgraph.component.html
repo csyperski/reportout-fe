@@ -4,6 +4,10 @@
 
 <ro-error [description]="message" *ngIf="state===ComponentState.Error"></ro-error>
 
+<div class="font-weight-bold text-center m-4" *ngIf="state===ComponentState.NotLoaded">
+  No data found.
+</div>
+
 <div *ngIf="state === ComponentState.Ready">
   <h4>Recent Task Status</h4>
   <p-chart type="doughnut" [data]="graphData"></p-chart>
