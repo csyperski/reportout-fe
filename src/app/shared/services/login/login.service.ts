@@ -57,7 +57,7 @@ export class LoginService extends Service {
   }
 
   attemptLogin(username: string, password: string): Observable<string> {
-    return this._http.post(this.getBaseUrl(), JSON.stringify({"email": username, "password": password}), this._options)
+    return this._http.post(this.getBaseUrl() +'/', JSON.stringify({"email": username, "password": password}), this._options)
       .pipe( map( res => res['token']));
   }
 
