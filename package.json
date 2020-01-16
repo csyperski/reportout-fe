@@ -1,6 +1,6 @@
 {
   "name": "ReportOut",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Report Out - A simple schedule-based data mover built with Angular 2",
   "homepage": "http://cwssoft.com",
   "private": true,
