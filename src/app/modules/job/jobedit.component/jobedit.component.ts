@@ -94,6 +94,7 @@ export class JobEditComponent extends CrudAddEditComponent<Job, JobService> {
       this.updateFormField('dataSource', job.dataSource ? job.dataSource.id : -1, formGroup);
       this.updateFormField('port', job.port, formGroup);
       this.updateFormField('jobAction', job.jobAction + '', formGroup);
+      this.updateFormField('onlySendIfResults', job.onlySendIfResults, formGroup);
     }
   }
 
@@ -426,6 +427,7 @@ export class JobEditComponent extends CrudAddEditComponent<Job, JobService> {
       'jobPath': [''],
       'confirmationEmail': [this.getUser().email],
       'includeHeaders': [false],
+      'onlySendIfResults': [false],
       'dataSource': [''],
       'port': ['-1'],
       'jobAction': ['0']
@@ -501,6 +503,7 @@ export class JobEditComponent extends CrudAddEditComponent<Job, JobService> {
       // boolean
       job.publicJob = this.formModel.value['publicJob'];
       job.includeHeaders = this.formModel.value['includeHeaders'];
+      job.onlySendIfResults = this.formModel.value['onlySendIfResults'];
 
       let dsId: number = +this.formModel.value['dataSource'];
       job.dataSource = this.dataSources.filter(ds => ds.id === dsId)[0];

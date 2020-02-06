@@ -16,6 +16,7 @@ export interface Job {
     jobPath: string;
     confirmationEmail: string;
     includeHeaders: boolean;
+    onlySendIfResults: boolean;
     dataSource: DataSource;
     jobSchedules: JobSchedule[];
     creatorId: number;
@@ -40,6 +41,7 @@ export class DefaultJob implements Job {
     jobPath: string;
     confirmationEmail: string;
     includeHeaders: boolean;
+    onlySendIfResults: boolean;
     dataSource: DataSource;
     jobSchedules: JobSchedule[];
     creatorId: number;
@@ -59,6 +61,7 @@ export class DefaultJob implements Job {
             this.jobPath = job.jobPath;
             this.confirmationEmail = job.confirmationEmail;
             this.includeHeaders = job.includeHeaders;
+            this.onlySendIfResults = job.onlySendIfResults;
             this.dataSource = job.dataSource;
             this.jobSchedules = job.jobSchedules;
             this.creatorId = job.creatorId;
