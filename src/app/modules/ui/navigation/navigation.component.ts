@@ -21,9 +21,9 @@ export class NavigationComponent extends SimpleComponent implements OnInit, OnDe
     // Reports
     new MenuItem('fa-paper-plane-o', 'Jobs', () => this._router.navigate(['/jobs', {}]), () => this.isLoggedIn()),
     // Data Source Menu Item
-    new MenuItem('fa-database', 'Data Sources', () => this._router.navigate(['/datasources', {}]), () => this.isLoggedIn()),
+    new MenuItem('fa-database', 'Data Sources', () => this._router.navigate(['/datasources', {}]), () => this.isAdmin()),
     // Users Menu Item
-    new MenuItem('fa-users', 'Users', () => this._router.navigate(['/users']), () => this.isLoggedIn())
+    new MenuItem('fa-users', 'Users', () => this._router.navigate(['/users']), () => this.isAdmin())
   ];
 
   activeMenuItems: MenuItem[] = this.menuItems;
@@ -98,6 +98,5 @@ export class NavigationComponent extends SimpleComponent implements OnInit, OnDe
   ngOnDestroy() {
     this._subscription.unsubscribe();
     this._systemEventSubscription.unsubscribe();
-
   }
 }

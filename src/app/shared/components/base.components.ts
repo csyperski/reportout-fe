@@ -7,10 +7,9 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {finalize} from 'rxjs/operators';
 import {MessageService} from "../services/message";
 import {BaseService} from "../services/baseservice";
-import {UserService} from "../services/user";
+import {isAdminUser, isLoggedIn,UserService} from "../services/user";
 import {User} from "../models/user/user";
 import {AppSettings} from "../models/appsettings/appsettings";
-import {isLoggedIn} from "../services/user";
 
 
 
@@ -53,6 +52,10 @@ export abstract class SimpleComponent extends BaseComponent implements OnInit {
 
   isLoggedIn(): boolean {
     return isLoggedIn();
+  }
+
+  isAdmin(): boolean {
+    return isAdminUser();
   }
 
   getUserLocal(): User {
