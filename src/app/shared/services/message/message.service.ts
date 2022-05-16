@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Message} from '../../models/message/message';
-import {MatSnackBar} from '@angular/material';
 import {Observable, Subject} from 'rxjs';
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Injectable()
 export class MessageService {

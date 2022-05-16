@@ -2,7 +2,6 @@ import {OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit} from '@angular/
 import {DomainObject} from '../models/domainobject';
 import {FormControl, FormGroup} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
-import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {HttpErrorResponse} from '@angular/common/http';
 import {finalize} from 'rxjs/operators';
 import {MessageService} from "../services/message";
@@ -10,6 +9,9 @@ import {BaseService} from "../services/baseservice";
 import {isAdminUser, isLoggedIn,UserService} from "../services/user";
 import {User} from "../models/user/user";
 import {AppSettings} from "../models/appsettings/appsettings";
+import {MatSort} from "@angular/material/sort";
+import {MatPaginator} from "@angular/material/paginator";
+import {MatTableDataSource} from "@angular/material/table";
 
 
 
