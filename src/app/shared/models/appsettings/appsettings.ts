@@ -14,7 +14,7 @@ export class AppSettings {
     }
 
     public static get version(): string {
-        return "1.1.3";
+        return "1.2.0";
     }
 
     public static get production(): boolean {

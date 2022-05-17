@@ -3,26 +3,21 @@
   background-color: rgba(0, 0, 0, 0.8);
   width: 100%;
   height: 60px;
-  z-index: 100;
-  a {
+  z-index: 100; }
+  .top-nav-bar a {
     color: inherit;
-    text-decoration: none;
-  }
-}
+    text-decoration: none; }
 
 .navbar-brand {
   font-weight: bold;
-  color: #fff !important;
-
-}
+  color: #fff !important; }
 
 .navbar .active {
-  font-weight: bold;
-}
+  font-weight: bold; }
 
 .navbar-nav {
-  color: #fff;
-  li {
-    padding-left: 3rem;
-  }
-}
+  color: #fff; }
+  .navbar-nav li {
+    padding-left: 3rem; }
+
+/*# sourceMappingURL=navigation.css.map */
