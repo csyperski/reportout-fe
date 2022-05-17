@@ -5,7 +5,7 @@ import {Router} from '@angular/router';
 import {MenuService} from '../../../shared/services/menu';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {LoginService} from '../../../shared/services/login';
-import * as decode from 'jwt-decode';
+import jwt_decode from 'jwt-decode';
 import {LoginSubmenu} from '../model/loginsubmenu';
 import {SystemEventService} from '../../../shared/services/systemevent';
 import {AppSettings} from "../../../shared/models/appsettings/appsettings";
@@ -50,7 +50,7 @@ export class LoginScreenComponent extends SimpleComponent implements OnInit {
       this._loginService.attemptLogin(this.formGroup.value['username'], this.formGroup.value['password'])
         .subscribe(
           (token) => {
-            const decoded = decode(token);
+            const decoded = jwt_decode(token);
             const username = decoded['userEmail'];
             console.log(`Username: ${username}`);
 
