@@ -26,19 +26,19 @@ export class BaseComponent {
 
   state = this.ComponentState.NotLoaded;
 
-  private _dateoptions = {
+  private dateoptions: Intl.DateTimeFormatOptions = {
     year: 'numeric', month: 'short',
     day: 'numeric', hour: '2-digit', minute: '2-digit'
   };
 
   log(msg: string): void {
     const date = new Date();
-    console.log(`INFO [${date.toLocaleString('en-us', this._dateoptions)}] - ${msg}`);
+    console.log(`INFO [${date.toLocaleString('en-us', this.dateoptions)}] - ${msg}`);
   }
 
   error(msg: string): void {
     const date = new Date();
-    console.error(`ERROR [${date.toLocaleString('en-us', this._dateoptions)}] - ${msg}`);
+    console.error(`ERROR [${date.toLocaleString('en-us', this.dateoptions)}] - ${msg}`);
   }
 
 }
